@@ -1,0 +1,52 @@
+@startuml
+
+!include use-case.iuml
+
+title <b>Papier</b> | Diagram Kasus Penggunaan
+
+' Actor
+User << Human >> as "User"
+App << System >> as "Aplikasi"
+
+left to right direction
+
+' Main Module
+package Utama {
+  User -- (Write)
+  User -- (Edit)
+  User -- (MarkComplete)
+  (MarkComplete) ..> (MarkCompleteAll) : <<extends>>
+  User -- (Delete)
+  (Delete) ..> (Clear) : <<extends>>
+  User -- (Filter)
+  (Filter) ..> (FilterAll) : <<extends>>
+  (Filter) ..> (FilterActive) : <<extends>>
+  (Filter) ..> (FilterCompleted) : <<extends>>
+}
+
+' Tracker Module
+package Pelacak {
+  User -- (SeeListCount)
+  App -- (Track)
+  (Track) <.. (CountAll) : <<extends>>
+}
+
+' Main Actions
+
+(Write) as "Membuat list baru"
+(Edit) as "Mengubah list yang sudah ada"
+(MarkComplete) as "Menandai list tertentu sebagai telah dikerjakan"
+(MarkCompleteAll) as "Menandai semua list sebagai telah dikerjakan"
+(Delete) as "Menghapus list tertentu"
+(Clear) as "Menghapus semua list yang telah dilakukan"
+(Filter) as "Filter list yang ditampilkan"
+(FilterAll) as "Filter semua list"
+(FilterActive) as "Filter hanya list yang aktif"
+(FilterCompleted) as "Filter hanya list yang telah dikerjakan"
+
+' List Tracker
+(SeeListCount) as "Melihat jumlah list"
+(Track) as "Melacak kondisi"
+(CountAll) as "Menghitung semua list aktif"
+
+@enduml
